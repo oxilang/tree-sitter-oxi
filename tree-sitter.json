@@ -1,0 +1,41 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "oxi",
+      "camelcase": "Oxi",
+      "title": "Oxi",
+      "scope": "source.oxi",
+      "file-types": [
+        "oxi"
+      ],
+      "injection-regex": "^oxi$",
+      "class-name": "TreeSitterOxi"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Oxi grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "septechx",
+        "url": ""
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/oxilang/oxi-treesitter",
+      "funding": ""
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": false,
+    "java": false,
+    "node": false,
+    "python": false,
+    "rust": false,
+    "swift": false,
+    "zig": false
+  }
+}
