@@ -390,6 +390,10 @@
         {
           "type": "unary_expression",
           "named": true
+        },
+        {
+          "type": "while_expression",
+          "named": true
         }
       ]
     }
@@ -1509,6 +1513,32 @@
     }
   },
   {
+    "type": "while_expression",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "!",
     "named": false
   },
@@ -1743,6 +1773,10 @@
   },
   {
     "type": "true",
+    "named": false
+  },
+  {
+    "type": "while",
     "named": false
   },
   {

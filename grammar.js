@@ -184,6 +184,7 @@ module.exports = grammar({
         $.array_literal,
         $.cast_expression,
         $.if_expression,
+        $.while_expression,
         $.loop_expression,
         $.block,
       ),
@@ -295,6 +296,9 @@ module.exports = grammar({
           seq("else", field("alternative", choice($.block, $.if_expression))),
         ),
       ),
+
+    while_expression: ($) =>
+      seq("while", field("condition", $.expression), field("body", $.block)),
 
     loop_expression: ($) => seq("loop", $.block),
 

@@ -10,6 +10,7 @@
 "return" @keyword.return
 "if" @keyword.conditional
 "else" @keyword.conditional
+"while" @keyword.repeat
 "loop" @keyword.repeat
 "as" @keyword.operator
 "pub" @keyword.modifier
