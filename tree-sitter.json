@@ -6,9 +6,7 @@
       "camelcase": "Oxi",
       "title": "Oxi",
       "scope": "source.oxi",
-      "file-types": [
-        "oxi"
-      ],
+      "file-types": ["oxi"],
       "injection-regex": "^oxi$",
       "class-name": "TreeSitterOxi"
     }
@@ -24,7 +22,7 @@
       }
     ],
     "links": {
-      "repository": "https://github.com/oxilang/oxi-treesitter",
+      "repository": "https://github.com/oxilang/tree-sitter-oxi",
       "funding": ""
     }
   },

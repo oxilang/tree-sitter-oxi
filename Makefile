@@ -1,5 +1,5 @@
 LANGUAGE_NAME := tree-sitter-oxi
-HOMEPAGE_URL := https://github.com/oxilang/oxi-treesitter
+HOMEPAGE_URL := https://github.com/oxilang/tree-sitter-oxi
 VERSION := 0.1.0
 
 # repository

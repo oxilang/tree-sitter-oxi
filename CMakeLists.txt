@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 project(tree-sitter-oxi
         VERSION "0.1.0"
         DESCRIPTION "Oxi grammar for tree-sitter"
-        HOMEPAGE_URL "https://github.com/oxilang/oxi-treesitter"
+        HOMEPAGE_URL "https://github.com/oxilang/tree-sitter-oxi"
         LANGUAGES C)
 
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
