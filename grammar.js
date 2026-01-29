@@ -1,5 +1,5 @@
 module.exports = grammar({
-  name: "oxilang",
+  name: "oxi",
 
   extras: ($) => [/\s/, $.comment],
 
