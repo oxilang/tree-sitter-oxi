@@ -39,14 +39,13 @@
 (cast_expression (path) @type)
 (impl_definition interface: (path) @type)
 (impl_definition type: (path) @type)
+(impl_definition type: (_) @type)
 (interface_method return_type: (path) @type)
 (function_definition return_type: (path) @type)
 (struct_method return_type: (path) @type)
 (impl_method return_type: (path) @type)
 (struct_definition name: (identifier) @type)
 (interface_definition name: (identifier) @type)
-(impl_definition type: (_) @type)
-(impl_definition interface: (path) @type)
 (struct_instantiation name: (identifier) @type)
 
 ; Functions
@@ -72,13 +71,6 @@
 (struct_field name: (identifier) @variable.member)
 (struct_instantiation field: (identifier) @variable.member)
 (member_expression property: (identifier) @variable.member)
-
-; Override member property highlighting if it is part of a call expression
-(call_expression
-  function: (expression
-    (primary_expression
-      (member_expression
-        property: (identifier) @function.call))))
 
 ; Attributes
 (attribute (identifier) @attribute)
