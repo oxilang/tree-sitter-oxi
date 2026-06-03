@@ -4,30 +4,37 @@ module.exports = grammar({
   extras: ($) => [/\s/, $.comment],
 
   conflicts: ($) => [
-    [$.binary_expression, $.unary_expression, $.postfix_expression],
-    [$.break_expression, $.binary_expression],
-    [$.break_expression, $.assignment_expression],
-    [$.break_expression, $.cast_expression],
     [$.break_expression],
+    [$.return_expression],
+    [$.break_expression, $.assignment_expression],
+    [$.break_expression, $.binary_expression],
+    [$.break_expression, $.cast_expression],
+    [$.return_expression, $.assignment_expression],
+    [$.return_expression, $.binary_expression],
+    [$.return_expression, $.cast_expression],
   ],
 
   rules: {
-    source_file: ($) => repeat($._statement),
+    source_file: ($) => repeat($._item),
 
-    _statement: ($) =>
+    _item: ($) =>
       choice(
-        $.var_declaration,
+        $.const_declaration,
         $.function_definition,
         $.struct_definition,
         $.interface_definition,
         $.impl_definition,
         $.import_statement,
-        $.return_statement,
+        $.module_definition,
+      ),
+
+    _statement: ($) =>
+      choice(
+        $.var_declaration,
         $.expression_statement,
         $.semicolon_statement,
       ),
 
-    // Modifiers and Attributes
     attribute: ($) =>
       seq(
         "#",
@@ -42,12 +49,22 @@ module.exports = grammar({
     _modifiers: ($) => repeat1($.modifier),
     _attributes: ($) => repeat1($.attribute),
 
-    // Variable Declaration
-    var_declaration: ($) =>
+    const_declaration: ($) =>
       seq(
         optional($._attributes),
         optional($._modifiers),
-        choice("let", "static"),
+        "const",
+        field("name", $.identifier),
+        ":",
+        field("type", $._type),
+        "=",
+        field("value", $.expression),
+        ";",
+      ),
+
+    var_declaration: ($) =>
+      seq(
+        "let",
         optional("mut"),
         field("name", $.identifier),
         optional(seq(":", field("type", $._type))),
@@ -55,7 +72,6 @@ module.exports = grammar({
         ";",
       ),
 
-    // Function Definition
     function_definition: ($) =>
       seq(
         optional($._attributes),
@@ -63,8 +79,8 @@ module.exports = grammar({
         "fn",
         field("name", $.identifier),
         field("parameters", $.parameter_list),
-        optional(field("return_type", $._type)),
-        choice(field("body", $.block), ";"),
+        field("return_type", $._type),
+        choice(field("body", $.block), ";", ","),
       ),
 
     parameter_list: ($) => seq("(", sepBy(",", $.parameter), ")"),
@@ -72,7 +88,6 @@ module.exports = grammar({
     parameter: ($) =>
       seq(field("name", $.identifier), ":", field("type", $._type)),
 
-    // Struct Definition
     struct_definition: ($) =>
       seq(
         optional($._attributes),
@@ -104,7 +119,6 @@ module.exports = grammar({
         field("body", $.block),
       ),
 
-    // Interface
     interface_definition: ($) =>
       seq(
         optional($._attributes),
@@ -121,25 +135,24 @@ module.exports = grammar({
         "fn",
         field("name", $.identifier),
         field("parameters", $.parameter_list),
-        optional(field("return_type", $._type)),
-        optional(","),
+        field("return_type", $._type),
+        ",",
       ),
 
-    // Impl
     impl_definition: ($) =>
       seq(
         optional($._attributes),
         optional($._modifiers),
         "impl",
-        field("interface", $.identifier),
-        ":",
-        field("type", $._type),
+        field("interface", $.path),
+        "for",
+        field("type", $.path),
         "{",
-        repeat($.interface_method_impl),
+        repeat($.impl_method),
         "}",
       ),
 
-    interface_method_impl: ($) =>
+    impl_method: ($) =>
       seq(
         "fn",
         field("name", $.identifier),
@@ -148,7 +161,18 @@ module.exports = grammar({
         field("body", $.block),
       ),
 
-    // Import
+    module_definition: ($) =>
+      seq(
+        optional($._attributes),
+        optional($._modifiers),
+        "mod",
+        field("name", $.identifier),
+        choice(
+          ";",
+          seq("{", repeat($._item), "}"),
+        ),
+      ),
+
     import_statement: ($) =>
       seq(
         optional($._attributes),
@@ -160,7 +184,8 @@ module.exports = grammar({
 
     _import_tree: ($) =>
       seq(
-        $.path,
+        $.identifier,
+        repeat(seq("::", $.identifier)),
         optional(
           seq("::", choice("*", seq("{", sepBy(",", $._import_tree), "}"))),
         ),
@@ -169,14 +194,10 @@ module.exports = grammar({
 
     path: ($) => prec.right(seq($.identifier, repeat(seq("::", $.identifier)))),
 
-    // Return
-    return_statement: ($) => seq("return", optional($.expression), ";"),
-
     expression_statement: ($) => prec.right(seq($.expression, optional(";"))),
 
     semicolon_statement: ($) => ";",
 
-    // Expressions
     expression: ($) =>
       choice(
         $.primary_expression,
@@ -191,6 +212,7 @@ module.exports = grammar({
         $.while_expression,
         $.loop_expression,
         $.break_expression,
+        $.return_expression,
         $.block,
       ),
 
@@ -201,9 +223,8 @@ module.exports = grammar({
         $.string_literal,
         $.char_literal,
         $.boolean_literal,
-        $.identifier,
+        $.path,
         $.parenthesized_expression,
-        $.type_expression,
         $.call_expression,
         $.member_expression,
       ),
@@ -226,22 +247,19 @@ module.exports = grammar({
               ">",
               "<=",
               ">=",
-              "&&",
-              "||",
-              "<<",
-              ">>",
               "|",
               "&",
-              "^",
+              "..",
+              "|>",
             ),
           ),
           field("right", $.expression),
         ),
       ),
 
-    unary_expression: ($) => prec(10, seq(choice("-", "!", "&"), $.expression)),
+    unary_expression: ($) => prec(10, seq(choice("-", "&", "@"), $.expression)),
 
-    postfix_expression: ($) => prec(11, seq($.expression, choice("?", "*"))),
+    postfix_expression: ($) => prec(11, seq($.expression, choice("?", "@"))),
 
     assignment_expression: ($) =>
       prec.right(
@@ -257,7 +275,7 @@ module.exports = grammar({
         12,
         seq(
           field("object", $.expression),
-          choice(".", "::"),
+          ".",
           field("property", $.identifier),
         ),
       ),
@@ -309,24 +327,23 @@ module.exports = grammar({
 
     break_expression: ($) => seq("break", optional($.expression)),
 
-    block: ($) => seq("{", repeat($._statement), "}"),
+    return_expression: ($) => seq("return", optional($.expression)),
 
-    type_expression: ($) => seq("$", $._type),
+    block: ($) => seq("{", repeat($._statement), "}"),
 
     parenthesized_expression: ($) => seq("(", sepBy(",", $.expression), ")"),
 
-    // Types
     _type: ($) =>
       choice(
-        $.primitive_type,
+        $.path,
         $.pointer_type,
         $.array_type,
         $.slice_type,
         $.function_type,
         $.tuple_type,
+        "$",
+        "..",
       ),
-
-    primitive_type: ($) => $.identifier,
 
     pointer_type: ($) => seq("&", optional("mut"), $._type),
 

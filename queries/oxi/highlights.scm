@@ -28,26 +28,36 @@
 (identifier) @variable
 
 ; Types
-(primitive_type (identifier) @type)
-(type_expression) @type
-(pointer_type) @type
-(array_type) @type
-(slice_type) @type
+(pointer_type (path) @type)
+(array_type (path) @type)
+(slice_type (path) @type)
+(function_type (path) @type)
+(tuple_type (path) @type)
+(struct_field type: (path) @type)
+(parameter type: (path) @type)
+(var_declaration type: (path) @type)
+(cast_expression (path) @type)
+(impl_definition interface: (path) @type)
+(impl_definition type: (path) @type)
+(interface_method return_type: (path) @type)
+(function_definition return_type: (path) @type)
+(struct_method return_type: (path) @type)
+(impl_method return_type: (path) @type)
 (struct_definition name: (identifier) @type)
 (interface_definition name: (identifier) @type)
 (impl_definition type: (_) @type)
-(impl_definition interface: (identifier) @type)
+(impl_definition interface: (path) @type)
 (struct_instantiation name: (identifier) @type)
 
 ; Functions
 (function_definition name: (identifier) @function)
 (struct_method name: (identifier) @function.method)
 (interface_method name: (identifier) @function.method)
-(interface_method_impl name: (identifier) @function.method)
+(impl_method name: (identifier) @function.method)
 (call_expression
   function: (expression
     (primary_expression
-      (identifier) @function.call)))
+      (path (identifier) @function.call))))
 (call_expression
   function: (expression
     (primary_expression
@@ -109,14 +119,8 @@
   ">"
   "<="
   ">="
-  "&&"
-  "||"
-  "!"
   "&"
   "|"
-  "^"
-  "<<"
-  ">>"
   "+="
   "-="
   "*="
