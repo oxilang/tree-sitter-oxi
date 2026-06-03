@@ -99,7 +99,7 @@
 
 ; Builtin functions (starting with @)
 ((identifier) @function.builtin
- (#match? @function.builtin "^@"))
+ (#lua-match? @function.builtin "^@"))
 
 ; Self type
 ((identifier) @type.builtin
