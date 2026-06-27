@@ -1,16 +1,44 @@
 {
   "name": "tree-sitter-oxi",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Treesitter parser for the oxi programming language",
+  "type": "module",
   "scripts": {
-    "generate": "tree-sitter generate"
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oxilang/tree-sitter-oxi.git"
+  },
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "queries/*",
+    "src/**"
+  ],
+  "keywords": [
+    "incremental",
+    "parsing",
+    "tree-sitter",
+    "oxi"
+  ],
+  "author": {
+    "name": "septech",
+    "url": ""
+  },
+  "license": "MIT",
   "packageManager": "pnpm@10.26.2",
-  "dependencies": {
-    "tree-sitter-cli": "^0.26.3"
+  "devDependencies": {
+    "tree-sitter": "^0.25.0",
+    "tree-sitter-cli": "^0.26.5"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.25.0"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
   }
 }

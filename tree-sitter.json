@@ -13,12 +13,12 @@
     }
   ],
   "metadata": {
-    "version": "0.1.0",
+    "version": "1.0.0",
     "license": "MIT",
-    "description": "Oxi grammar for tree-sitter",
+    "description": "Treesitter parser for the oxi programming language",
     "authors": [
       {
-        "name": "septechx",
+        "name": "septech",
         "url": ""
       }
     ],
