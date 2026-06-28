@@ -1,162 +1,156 @@
-; Keywords
-"fn" @keyword.function
-"struct" @keyword.type
-"interface" @keyword.type
-"impl" @keyword.type
-"const" @keyword.type
-"let" @keyword.type
-"static" @keyword.type
-"mut" @keyword.type
-"mod" @keyword
-"import" @keyword.import
-"return" @keyword.return
-"if" @keyword.conditional
-"else" @keyword.conditional
-"while" @keyword.repeat
-"loop" @keyword.repeat
-"for" @keyword.repeat
-"break" @keyword.repeat
-"as" @keyword.operator
-"pub" @keyword.modifier
-"extern" @keyword.modifier
+; Identifiers
 
-; Literals
-(integer_literal) @number
-(float_literal) @float
-(string_literal) @string
-(char_literal) @character
-(boolean_literal) @boolean
+(type_identifier) @type
+(primitive_type) @type.builtin
+(field_identifier) @property
 
-; Identifiers fallback
-(identifier) @variable
+; Identifier conventions
 
-; Types via AST context
-(pointer_type (path (identifier) @type))
-(array_type (path (identifier) @type))
-(slice_type (path (identifier) @type))
-(function_type (path (identifier) @type))
-(tuple_type (path (identifier) @type))
-(struct_field type: (path (identifier) @type))
-(parameter type: (path (identifier) @type))
-(var_declaration type: (path (identifier) @type))
-(const_declaration type: (path (identifier) @type))
-(cast_expression (path (identifier) @type))
-(impl_definition interface: (path (identifier) @type))
-(impl_definition type: (path (identifier) @type))
-(interface_method return_type: (path (identifier) @type))
-(function_definition return_type: (path (identifier) @type))
-(struct_method return_type: (path (identifier) @type))
-(impl_method return_type: (path (identifier) @type))
-(array_literal (path (identifier) @type))
+; Assume all-caps names are constants
+((identifier) @constant
+ (#match? @constant "^[A-Z][A-Z\\d_]+$"))
 
-(struct_definition name: (identifier) @type)
-(interface_definition name: (identifier) @type)
-(struct_instantiation name: (identifier) @type)
+; Assume that uppercase names in paths are types
+((scoped_identifier
+  path: (identifier) @type)
+ (#match? @type "^[A-Z]"))
+((scoped_identifier
+  path: (scoped_identifier
+    name: (identifier) @type))
+ (#match? @type "^[A-Z]"))
+((scoped_type_identifier
+  path: (identifier) @type)
+ (#match? @type "^[A-Z]"))
+((scoped_type_identifier
+  path: (scoped_identifier
+    name: (identifier) @type))
+ (#match? @type "^[A-Z]"))
 
-; Functions
-(function_definition name: (identifier) @function)
-(struct_method name: (identifier) @function.method)
-(interface_method name: (identifier) @function.method)
-(impl_method name: (identifier) @function.method)
+; Path segments
 
-; Function calls: only the LAST identifier in a path is the callee
-(call_expression
-  function: (expression
-    (primary_expression
-      (path (identifier) @function.call .))))
+((scoped_identifier
+   path: (identifier) @constant)
+ (#match? @constant "^[A-Z][A-Z\\d_]*$"))
+((scoped_identifier
+   path: (scoped_identifier
+     name: (identifier) @constant))
+ (#match? @constant "^[A-Z][A-Z\\d_]*$"))
+((scoped_type_identifier
+   path: (identifier) @constant)
+ (#match? @constant "^[A-Z][A-Z\\d_]*$"))
+((scoped_type_identifier
+   path: (scoped_identifier
+     name: (identifier) @constant))
+ (#match? @constant "^[A-Z][A-Z\\d_]*$"))
+((scoped_identifier
+   name: (identifier) @constant)
+ (#match? @constant "^[A-Z][A-Z\\d_]*$"))
 
-; Non-last identifiers in any path are types/modules
-(path (identifier) @type "::")
+; Function calls
 
 (call_expression
-  function: (expression
-    (primary_expression
-      (member_expression
-        property: (identifier) @function.call))))
+  function: (identifier) @function)
+(call_expression
+  function: (field_expression
+    field: (field_identifier) @function.method))
+(call_expression
+  function: (scoped_identifier
+    "::"
+    name: (identifier) @function))
 
-(parameter name: (identifier) @variable.parameter)
+; Function definitions
 
-; Variables and Fields
-(var_declaration name: (identifier) @variable)
-(const_declaration name: (identifier) @constant)
-(struct_field name: (identifier) @variable.member)
-(struct_instantiation field: (identifier) @variable.member)
-(member_expression property: (identifier) @variable.member)
+(function_item (identifier) @function)
+(function_signature_item (identifier) @function)
 
-; Attributes
-(attribute (identifier) @attribute)
+(line_comment) @comment
 
-; Comments
-(comment) @comment
+"(" @punctuation.bracket
+")" @punctuation.bracket
+"[" @punctuation.bracket
+"]" @punctuation.bracket
+"{" @punctuation.bracket
+"}" @punctuation.bracket
 
-; Primitive types
-((identifier) @type.builtin
- (#any-of? @type.builtin
-  "i8" "i16" "i32" "i64" "i128" "isize"
-  "u8" "u16" "u32" "u64" "u128" "usize"
-  "f16" "f32" "f64" "f128"
-  "bool" "void" "any"))
+"::" @punctuation.delimiter
+":" @punctuation.delimiter
+"." @punctuation.delimiter
+"," @punctuation.delimiter
+";" @punctuation.delimiter
 
-; Builtin functions (starting with @)
-((identifier) @function.builtin
- (#lua-match? @function.builtin "^@"))
-
-; Self type
-((identifier) @type.builtin
- (#eq? @type.builtin "Self"))
-
-; self variable
-((identifier) @variable.builtin
+(parameter (identifier) @variable.parameter)
+((parameter (identifier) @variable.builtin)
  (#eq? @variable.builtin "self"))
 
-; crate, super as keywords in path context
-((identifier) @keyword.import
- (#any-of? @keyword.import "crate" "super"))
+"as" @keyword
+"break" @keyword
+"const" @keyword
+"else" @keyword
+(extern_modifier) @keyword
+"fn" @keyword
+"for" @keyword
+"if" @keyword
+"impl" @keyword
+"let" @keyword
+"loop" @keyword
+"mod" @keyword
+(visibility_modifier) @keyword
+"return" @keyword
+"struct" @keyword
+"interface" @keyword
+"import" @keyword
+"while" @keyword
+(crate) @keyword
+(mutable_specifier) @keyword
+(import_list (self) @keyword)
+(scoped_import_list (self) @keyword)
+(scoped_identifier (self) @keyword)
+(super) @keyword
 
-; Punctuation
-[
-  ";"
-  "."
-  ","
-  ":"
-  "::"
-  "->"
-] @punctuation.delimiter
+(self) @variable.builtin
 
-[
-  "("
-  ")"
-  "["
-  "]"
-  "{"
-  "}"
-] @punctuation.bracket
+((type_identifier) @variable.builtin
+ (#eq? @variable.builtin "Self"))
 
-; Operators
-[
-  "="
-  "+"
-  "-"
-  "*"
-  "/"
-  "%"
-  "=="
-  "!="
-  "<"
-  ">"
-  "<="
-  ">="
-  "&"
-  "|"
-  "+="
-  "-="
-  "*="
-  "/="
-  "%="
-  ".."
-  "|>"
-  "?"
-] @operator
+(char_literal) @string
+(string_literal) @string
 
-; Dereference operator
-(postfix_expression "@" @operator)
+(boolean_literal) @constant
+(integer_literal) @constant
+(float_literal) @constant
+
+(escape_sequence) @escape
+
+(attribute_item) @attribute
+(inner_attribute_item) @attribute
+
+"+" @operator
+"-" @operator
+"*" @operator
+"/" @operator
+"%" @operator
+"&" @operator
+"|" @operator
+"^" @operator
+"!" @operator
+"@" @operator
+"=" @operator
+"==" @operator
+"!=" @operator
+"<" @operator
+"<=" @operator
+">" @operator
+">=" @operator
+"<<" @operator
+">>" @operator
+"&&" @operator
+"||" @operator
+".." @operator
+"|>" @operator
+"?" @operator
+"->" @operator
+"+=" @operator
+"-=" @operator
+"*=" @operator
+"/=" @operator
+"%=" @operator
