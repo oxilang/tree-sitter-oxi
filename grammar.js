@@ -568,7 +568,7 @@ export default grammar({
     string_literal: ($) =>
       seq('"', repeat(choice($.escape_sequence, $.string_content)), '"'),
 
-    string_content: (_) => token(/[^"]*/),
+    string_content: (_) => token(/[^"]+/),
 
     char_literal: (_) =>
       token(

@@ -8,7 +8,7 @@
 
 ; Assume all-caps names are constants
 ((identifier) @constant
- (#match? @constant "^[A-Z][A-Z\\d_]+$'"))
+ (#match? @constant "^[A-Z][A-Z\\d_]+$"))
 
 ; Assume that uppercase names in paths are types
 ((scoped_identifier
@@ -25,6 +25,26 @@
   path: (scoped_identifier
     name: (identifier) @type))
  (#match? @type "^[A-Z]"))
+
+; Path segments
+
+((scoped_identifier
+   path: (identifier) @constant)
+ (#match? @constant "^[A-Z][A-Z\\d_]*$"))
+((scoped_identifier
+   path: (scoped_identifier
+     name: (identifier) @constant))
+ (#match? @constant "^[A-Z][A-Z\\d_]*$"))
+((scoped_type_identifier
+   path: (identifier) @constant)
+ (#match? @constant "^[A-Z][A-Z\\d_]*$"))
+((scoped_type_identifier
+   path: (scoped_identifier
+     name: (identifier) @constant))
+ (#match? @constant "^[A-Z][A-Z\\d_]*$"))
+((scoped_identifier
+   name: (identifier) @constant)
+ (#match? @constant "^[A-Z][A-Z\\d_]*$"))
 
 ; Function calls
 
@@ -59,12 +79,14 @@
 ";" @punctuation.delimiter
 
 (parameter (identifier) @variable.parameter)
+((parameter (identifier) @variable.builtin)
+ (#eq? @variable.builtin "self"))
 
 "as" @keyword
 "break" @keyword
 "const" @keyword
 "else" @keyword
-"extern" @keyword
+(extern_modifier) @keyword
 "fn" @keyword
 "for" @keyword
 "if" @keyword
@@ -72,7 +94,7 @@
 "let" @keyword
 "loop" @keyword
 "mod" @keyword
-"pub" @keyword
+(visibility_modifier) @keyword
 "return" @keyword
 "struct" @keyword
 "interface" @keyword
@@ -87,18 +109,48 @@
 
 (self) @variable.builtin
 
+((type_identifier) @variable.builtin
+ (#eq? @variable.builtin "Self"))
+
 (char_literal) @string
 (string_literal) @string
 
-(boolean_literal) @constant.builtin
-(integer_literal) @constant.builtin
-(float_literal) @constant.builtin
+(boolean_literal) @constant
+(integer_literal) @constant
+(float_literal) @constant
 
 (escape_sequence) @escape
 
 (attribute_item) @attribute
 (inner_attribute_item) @attribute
 
+"+" @operator
+"-" @operator
 "*" @operator
+"/" @operator
+"%" @operator
 "&" @operator
-"'" @operator
+"|" @operator
+"^" @operator
+"!" @operator
+"@" @operator
+"=" @operator
+"==" @operator
+"!=" @operator
+"<" @operator
+"<=" @operator
+">" @operator
+">=" @operator
+"<<" @operator
+">>" @operator
+"&&" @operator
+"||" @operator
+".." @operator
+"|>" @operator
+"?" @operator
+"->" @operator
+"+=" @operator
+"-=" @operator
+"*=" @operator
+"/=" @operator
+"%=" @operator

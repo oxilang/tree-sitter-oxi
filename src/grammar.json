@@ -3409,7 +3409,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[^\"]*"
+        "value": "[^\"]+"
       }
     },
     "char_literal": {
