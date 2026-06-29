@@ -1,0 +1,1138 @@
+==================
+Binary expression (arithmetic)
+==================
+
+fn main() i32 {
+    1 + 2
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (binary_expression
+        (integer_literal)
+        (integer_literal)))))
+
+==================
+Binary expression (all operators)
+==================
+
+fn main() void {
+    let a = 1 + 2;
+    let b = 3 - 4;
+    let c = 5 * 6;
+    let d = 7 / 8;
+    let e = 9 % 3;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal))))))
+
+==================
+Binary expression (comparison)
+==================
+
+fn main() bool {
+    let a = 1 == 2;
+    let b = 1 != 2;
+    let c = 1 < 2;
+    let d = 1 <= 2;
+    let e = 1 > 2;
+    let f = 1 >= 2;
+    return a;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (expression_statement
+        (return_expression
+          (identifier))))))
+
+==================
+Binary expression (logical)
+==================
+
+fn main() bool {
+    let a = true && false;
+    let b = true || false;
+    return a;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (boolean_literal)
+          (boolean_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (boolean_literal)
+          (boolean_literal)))
+      (expression_statement
+        (return_expression
+          (identifier))))))
+
+==================
+Binary expression (bitwise)
+==================
+
+fn main() i32 {
+    let a = 1 & 2;
+    let b = 1 | 2;
+    let c = 1 ^ 2;
+    let d = 1 << 2;
+    let e = 1 >> 2;
+    return a;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (integer_literal)))
+      (expression_statement
+        (return_expression
+          (identifier))))))
+
+==================
+Binary expression (pipe)
+==================
+
+fn main() void {
+    let a = 1 |> foo;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (identifier))))))
+
+==================
+Unary expression (negate)
+==================
+
+fn main() i32 {
+    let x = 42;
+    let y = -x;
+    return y;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (unary_expression
+          (identifier)))
+      (expression_statement
+        (return_expression
+          (identifier))))))
+
+==================
+Unary expression (not)
+==================
+
+fn main() bool {
+    let x = true;
+    let y = !x;
+    return y;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (boolean_literal))
+      (let_declaration
+        (identifier)
+        (unary_expression
+          (identifier)))
+      (expression_statement
+        (return_expression
+          (identifier))))))
+
+==================
+Assignment expression
+==================
+
+fn main() i32 {
+    let mut x = 5;
+    x = 10;
+    return x;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (mutable_specifier)
+        (identifier)
+        (integer_literal))
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (return_expression
+          (identifier))))))
+
+==================
+Compound assignment
+==================
+
+fn main() i32 {
+    let mut x = 10;
+    x += 5;
+    x -= 3;
+    x *= 2;
+    x /= 4;
+    x %= 3;
+    return x;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (mutable_specifier)
+        (identifier)
+        (integer_literal))
+      (expression_statement
+        (compound_assignment_expr
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (compound_assignment_expr
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (compound_assignment_expr
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (compound_assignment_expr
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (compound_assignment_expr
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (return_expression
+          (identifier))))))
+
+==================
+Type cast expression
+==================
+
+fn main() i32 {
+    let x = 1 as i32;
+    let y = 1.5 as f64;
+    return x;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (type_cast_expression
+          (integer_literal)
+          (primitive_type)))
+      (let_declaration
+        (identifier)
+        (type_cast_expression
+          (float_literal)
+          (primitive_type)))
+      (expression_statement
+        (return_expression
+          (identifier))))))
+
+==================
+Call expression
+==================
+
+fn main() i32 {
+    return foo(1, 2, 3);
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (return_expression
+          (call_expression
+            (identifier)
+            (arguments
+              (integer_literal)
+              (integer_literal)
+              (integer_literal))))))))
+
+==================
+Call expression with method syntax
+==================
+
+fn main() void {
+    let a = foo.bar(1, 2);
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (call_expression
+          (field_expression
+            (identifier)
+            (field_identifier))
+          (arguments
+            (integer_literal)
+            (integer_literal)))))))
+
+==================
+Field expression
+==================
+
+fn main() i32 {
+    let foo = Foo { val: 42 };
+    return foo.val;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (struct_expression
+          (type_identifier)
+          (field_initializer_list
+            (field_initializer
+              (field_identifier)
+              (integer_literal)))))
+      (expression_statement
+        (return_expression
+          (field_expression
+            (identifier)
+            (field_identifier)))))))
+
+==================
+Field expression with integer literal
+==================
+
+fn main() void {
+    let a = tuple.0;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (field_expression
+          (identifier)
+          (integer_literal))))))
+
+==================
+Index expression
+==================
+
+fn main() void {
+    let a = arr[0];
+    let b = arr[i + 1];
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (index_expression
+          (identifier)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (index_expression
+          (identifier)
+          (binary_expression
+            (identifier)
+            (integer_literal)))))))
+
+==================
+Range expression (full)
+==================
+
+fn main() void {
+    let r = 0..10;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (range_expression
+          (integer_literal)
+          (integer_literal))))))
+
+==================
+Range expression (from start)
+==================
+
+fn main() void {
+    let r = 0..;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (range_expression
+          (integer_literal))))))
+
+==================
+Range expression (to end)
+==================
+
+fn main() void {
+    let r = ..10;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (range_expression
+          (integer_literal))))))
+
+==================
+Range expression (full range)
+==================
+
+fn main() void {
+    let r = ..;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (range_expression)))))
+
+==================
+Dereference expression
+==================
+
+fn main() i32 {
+    let x = 42;
+    let p = &x;
+    return p@;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (reference_expression
+          (identifier)))
+      (expression_statement
+        (return_expression
+          (dereference_expression
+            (identifier)))))))
+
+==================
+Try expression
+==================
+
+fn main() void {
+    let x = foo?;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (try_expression
+          (identifier))))))
+
+==================
+Reference expression
+==================
+
+fn main() void {
+    let x = 42;
+    let r = &x;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (reference_expression
+          (identifier))))))
+
+==================
+Reference expression (mutable)
+==================
+
+fn main() void {
+    let mut x = 42;
+    let r = &mut x;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (mutable_specifier)
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (reference_expression
+          (mutable_specifier)
+          (identifier))))))
+
+==================
+Return expression with value
+==================
+
+fn main() i32 {
+    return 42;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (return_expression
+          (integer_literal))))))
+
+==================
+Return expression without value
+==================
+
+fn main() void {
+    return;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (return_expression)))))
+
+==================
+Struct expression (full)
+==================
+
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() void {
+    let p = Point { x: 10, y: 20 };
+}
+
+---
+
+(source_file
+  (struct_item
+    (type_identifier)
+    (struct_body
+      (field_declaration_list
+        (field_declaration
+          (field_identifier)
+          (primitive_type))
+        (field_declaration
+          (field_identifier)
+          (primitive_type)))))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (struct_expression
+          (type_identifier)
+          (field_initializer_list
+            (field_initializer
+              (field_identifier)
+              (integer_literal))
+            (field_initializer
+              (field_identifier)
+              (integer_literal))))))))
+
+==================
+Struct expression (shorthand)
+==================
+
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() void {
+    let x = 10;
+    let p = Point { x, y: 20 };
+}
+
+---
+
+(source_file
+  (struct_item
+    (type_identifier)
+    (struct_body
+      (field_declaration_list
+        (field_declaration
+          (field_identifier)
+          (primitive_type))
+        (field_declaration
+          (field_identifier)
+          (primitive_type)))))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (struct_expression
+          (type_identifier)
+          (field_initializer_list
+            (shorthand_field_initializer
+              (identifier))
+            (field_initializer
+              (field_identifier)
+              (integer_literal))))))))
+
+==================
+Tuple expression
+==================
+
+fn main() void {
+    let t = (1, 2, 3);
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (tuple_expression
+          (integer_literal)
+          (integer_literal)
+          (integer_literal))))))
+
+==================
+Array expression
+==================
+
+fn main() void {
+    let a = [1, 2, 3];
+    let b = [];
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (array_expression
+          (integer_literal)
+          (integer_literal)
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (array_expression)))))
+
+==================
+Parenthesized expression
+==================
+
+fn main() i32 {
+    return (1 + 2) * 3;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (return_expression
+          (binary_expression
+            (parenthesized_expression
+              (binary_expression
+                (integer_literal)
+                (integer_literal)))
+            (integer_literal)))))))
+
+==================
+Break expression with value
+==================
+
+fn main() i32 {
+    loop {
+        break 42;
+    }
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (loop_expression
+          (block
+            (expression_statement
+              (break_expression
+                (integer_literal)))))))))
+
+==================
+Break expression without value
+==================
+
+fn main() void {
+    loop {
+        break;
+    }
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (loop_expression
+          (block
+            (expression_statement
+              (break_expression))))))))
+
+==================
+Scoped identifier
+==================
+
+fn main() void {
+    let a = foo::bar;
+    let b = foo::bar::baz;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (scoped_identifier
+          (identifier)
+          (identifier)))
+      (let_declaration
+        (identifier)
+        (scoped_identifier
+          (scoped_identifier
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Metavariable expression
+==================
+
+fn main() void {
+    let x = $name;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (metavariable)))))
+
+==================
+Self expression
+==================
+
+struct Foo {
+    val: i32,
+
+    pub fn get(self: &Self) i32 {
+        return self.val;
+    }
+}
+
+---
+
+(source_file
+  (struct_item
+    (type_identifier)
+    (struct_body
+      (field_declaration_list
+        (field_declaration
+          (field_identifier)
+          (primitive_type)))
+      (function_item
+        (visibility_modifier)
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (reference_type
+              (type_identifier))))
+        (primitive_type)
+        (block
+          (expression_statement
+            (return_expression
+              (field_expression
+                (self)
+                (field_identifier)))))))))
+
+==================
+Super and crate paths
+==================
+
+fn main() void {
+    let a = super::foo;
+    let b = crate::bar;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (scoped_identifier
+          (super)
+          (identifier)))
+      (let_declaration
+        (identifier)
+        (scoped_identifier
+          (crate)
+          (identifier))))))
+
+==================
+Empty statement (semicolons)
+==================
+
+fn main() void {
+    ;
+    ;;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (empty_statement)
+      (empty_statement)
+      (empty_statement))))
+
+==================
+Block expression
+==================
+
+fn main() i32 {
+    let x = {
+        let y = 1;
+        y + 2
+    };
+    return x;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (block
+          (let_declaration
+            (identifier)
+            (integer_literal))
+          (binary_expression
+            (identifier)
+            (integer_literal))))
+      (expression_statement
+        (return_expression
+          (identifier))))))

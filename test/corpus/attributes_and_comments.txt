@@ -1,0 +1,181 @@
+==================
+Attribute item (simple)
+==================
+
+#[test]
+fn main() void {}
+
+---
+
+(source_file
+  (attribute_item
+    (attribute
+      (identifier)))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Attribute item with arguments
+==================
+
+#[foo(bar, baz)]
+fn main() void {}
+
+---
+
+(source_file
+  (attribute_item
+    (attribute
+      (identifier)
+      (arguments
+        (identifier)
+        (identifier))))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Multiple attributes
+==================
+
+#[test]
+#[foo]
+fn main() void {}
+
+---
+
+(source_file
+  (attribute_item
+    (attribute
+      (identifier)))
+  (attribute_item
+    (attribute
+      (identifier)))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Inner attribute item
+==================
+
+#![feature(foo)]
+
+fn main() void {}
+
+---
+
+(source_file
+  (inner_attribute_item
+    (attribute
+      (identifier)
+      (arguments
+        (identifier))))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Line comments
+==================
+
+fn main() void {
+    // this is a comment
+    let x = 42; // inline comment
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (line_comment)
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (line_comment))))
+
+==================
+Shebang
+==================
+
+#!/usr/bin/env oxic
+
+fn main() void {}
+
+---
+
+(source_file
+  (shebang)
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Empty source file
+==================
+
+---
+
+(source_file)
+
+==================
+Expression statement with semicolon
+==================
+
+fn main() void {
+    42;
+    foo();
+    a + b;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (integer_literal))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (arguments)))
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (identifier))))))
+
+==================
+Declaration statement with empty
+==================
+
+fn main() void {
+    ;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (empty_statement))))

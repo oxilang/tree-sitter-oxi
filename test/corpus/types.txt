@@ -1,0 +1,385 @@
+==================
+Primitive types
+==================
+
+fn main() void {
+    let a: u8 = 0;
+    let b: i8 = 0;
+    let c: u16 = 0;
+    let d: i16 = 0;
+    let e: u32 = 0;
+    let f: i32 = 0;
+    let g: u64 = 0;
+    let h: i64 = 0;
+    let i: u128 = 0;
+    let j: i128 = 0;
+    let k: usize = 0;
+    let l: isize = 0;
+    let m: bool = true;
+    let n: char = 'a';
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (boolean_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal)))))
+
+==================
+Floating point types
+==================
+
+fn main() void {
+    let a: f16 = 0.0;
+    let b: f32 = 0.0;
+    let c: f64 = 0.0;
+    let d: f128 = 0.0;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (float_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (float_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (float_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (float_literal)))))
+
+==================
+Void type
+==================
+
+fn main() void {}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Never type
+==================
+
+fn main() void {
+    let x: ! = return;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (never_type)
+        (return_expression)))))
+
+==================
+Reference type
+==================
+
+fn foo(x: &i32) void {}
+
+fn main() void {}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (reference_type
+          (primitive_type))))
+    (primitive_type)
+    (block))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Mutable reference type
+==================
+
+fn foo(x: &mut i32) void {}
+
+fn main() void {}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (reference_type
+          (mutable_specifier)
+          (primitive_type))))
+    (primitive_type)
+    (block))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Array type
+==================
+
+fn main() void {
+    let a: [i32] = [];
+    let b: [u8] = [];
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (array_type
+          (primitive_type))
+        (array_expression))
+      (let_declaration
+        (identifier)
+        (array_type
+          (primitive_type))
+        (array_expression)))))
+
+==================
+Array type with length
+==================
+
+fn main() void {
+    let a: [i32; 10] = [];
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (array_type
+          (primitive_type)
+          (integer_literal))
+        (array_expression)))))
+
+==================
+Tuple type
+==================
+
+fn foo(x: (i32, bool)) void {}
+
+fn main() void {}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (tuple_type
+          (primitive_type)
+          (primitive_type))))
+    (primitive_type)
+    (block))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Function type
+==================
+
+fn foo(f: (x: i32) -> bool) void {}
+
+fn main() void {}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (function_type
+          (parameters
+            (parameter
+              (identifier)
+              (primitive_type)))
+          (primitive_type))))
+    (primitive_type)
+    (block))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Scoped type identifier
+==================
+
+fn main() void {
+    let x: foo::Bar = val;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (scoped_type_identifier
+          (identifier)
+          (type_identifier))
+        (identifier)))))
+
+==================
+Type identifier
+==================
+
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() void {
+    let p: Point = Point { x: 1, y: 2 };
+}
+
+---
+
+(source_file
+  (struct_item
+    (type_identifier)
+    (struct_body
+      (field_declaration_list
+        (field_declaration
+          (field_identifier)
+          (primitive_type))
+        (field_declaration
+          (field_identifier)
+          (primitive_type)))))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (type_identifier)
+        (struct_expression
+          (type_identifier)
+          (field_initializer_list
+            (field_initializer
+              (field_identifier)
+              (integer_literal))
+            (field_initializer
+              (field_identifier)
+              (integer_literal))))))))

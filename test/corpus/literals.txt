@@ -1,0 +1,379 @@
+==================
+Integer literals (decimal)
+==================
+
+fn main() void {
+    let a = 42;
+    let b = 1_000;
+    let c = 0;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (integer_literal)))))
+
+==================
+Integer literals (hex, binary, octal)
+==================
+
+fn main() void {
+    let a = 0xFF;
+    let b = 0b1010;
+    let c = 0o777;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (integer_literal)))))
+
+==================
+Integer literals with type suffixes
+==================
+
+fn main() void {
+    let a: i32 = 42i32;
+    let b: u8 = 255u8;
+    let c: usize = 100usize;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal)))))
+
+==================
+Float literals (decimal)
+==================
+
+fn main() void {
+    let a = 3.14;
+    let b = 0.5;
+    let c = 100.0;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (float_literal))
+      (let_declaration
+        (identifier)
+        (float_literal))
+      (let_declaration
+        (identifier)
+        (float_literal)))))
+
+==================
+Float literals (hex, binary, octal)
+==================
+
+fn main() void {
+    let a = 0xFF.0A;
+    let b = 0b1010.0101;
+    let c = 0o777.007;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (float_literal))
+      (let_declaration
+        (identifier)
+        (float_literal))
+      (let_declaration
+        (identifier)
+        (float_literal)))))
+
+==================
+Float literals with type suffixes
+==================
+
+fn main() void {
+    let a: f32 = 1.5f32;
+    let b: f64 = 3.14f64;
+    let c: f16 = 0.5f16;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (float_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (float_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (float_literal)))))
+
+==================
+String literals
+==================
+
+fn main() void {
+    let a = "hello";
+    let b = "world";
+    let c = "";
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (string_literal
+          (string_content)))
+      (let_declaration
+        (identifier)
+        (string_literal
+          (string_content)))
+      (let_declaration
+        (identifier)
+        (string_literal)))))
+
+==================
+String literals with escape sequences
+==================
+
+fn main() void {
+    let a = "tab\there";
+    let b = "newline\nhere";
+    let c = "unicode\u00A9";
+    let d = "hex\xFF";
+    let e = "curly\u{1F600}";
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (string_literal
+          (string_content)))
+      (let_declaration
+        (identifier)
+        (string_literal
+          (string_content)))
+      (let_declaration
+        (identifier)
+        (string_literal
+          (string_content)))
+      (let_declaration
+        (identifier)
+        (string_literal
+          (string_content)))
+      (let_declaration
+        (identifier)
+        (string_literal
+          (string_content))))))
+
+==================
+Char literals
+==================
+
+fn main() void {
+    let a: u8 = 'a';
+    let b: u8 = 'Z';
+    let c: u8 = '0';
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal)))))
+
+==================
+Char escape sequences
+==================
+
+fn main() void {
+    let a: u8 = '\n';
+    let b: u8 = '\t';
+    let c: u8 = '\\';
+    let d: u8 = '\x41';
+    let e: u8 = '\u00A9';
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal))
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal)))))
+
+==================
+Boolean literals
+==================
+
+fn main() bool {
+    let a = true;
+    let b = false;
+    return a;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (boolean_literal))
+      (let_declaration
+        (identifier)
+        (boolean_literal))
+      (expression_statement
+        (return_expression
+          (identifier))))))
+
+==================
+Negative literals
+==================
+
+fn main() i32 {
+    let a = -42;
+    let b = -3.14;
+    let c = -0xFF;
+    return a;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (unary_expression
+          (integer_literal)))
+      (let_declaration
+        (identifier)
+        (unary_expression
+          (float_literal)))
+      (let_declaration
+        (identifier)
+        (unary_expression
+          (integer_literal)))
+      (expression_statement
+        (return_expression
+          (identifier))))))

@@ -1,0 +1,666 @@
+==================
+Function declaration
+==================
+
+pub fn main() void {
+    return;
+}
+
+---
+
+(source_file
+  (function_item
+    (visibility_modifier)
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (return_expression)))))
+
+==================
+Function with parameters and return type
+==================
+
+pub fn add(a: i32, b: i32) i32 {
+    return a + b;
+}
+
+---
+
+(source_file
+  (function_item
+    (visibility_modifier)
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (primitive_type))
+      (parameter
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (block
+      (expression_statement
+        (return_expression
+          (binary_expression
+            (identifier)
+            (identifier)))))))
+
+==================
+Function signature (extern)
+==================
+
+pub extern fn foo() void;
+
+---
+
+(source_file
+  (function_signature_item
+    (visibility_modifier)
+    (extern_modifier)
+    (identifier)
+    (parameters)
+    (primitive_type)))
+
+==================
+Let declaration with type and value
+==================
+
+fn main() void {
+    let x: i32 = 42;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal)))))
+
+==================
+Let declaration without type
+==================
+
+fn main() void {
+    let x = 42;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (integer_literal)))))
+
+==================
+Let declaration mutable
+==================
+
+fn main() void {
+    let mut x = 42;
+    x = 10;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (mutable_specifier)
+        (identifier)
+        (integer_literal))
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal))))))
+
+==================
+Let declaration without value
+==================
+
+fn main() void {
+    let x: i32;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (primitive_type)))))
+
+==================
+Const declaration
+==================
+
+const MAX: i32 = 100;
+
+fn main() i32 {
+    return MAX;
+}
+
+---
+
+(source_file
+  (const_item
+    (identifier)
+    (primitive_type)
+    (integer_literal))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (return_expression
+          (identifier))))))
+
+==================
+Const declaration without value
+==================
+
+const MAX: i32;
+
+fn main() i32 {
+    return 0;
+}
+
+---
+
+(source_file
+  (const_item
+    (identifier)
+    (primitive_type))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (return_expression
+          (integer_literal))))))
+
+==================
+Struct declaration with fields
+==================
+
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() void {}
+
+---
+
+(source_file
+  (struct_item
+    (type_identifier)
+    (struct_body
+      (field_declaration_list
+        (field_declaration
+          (field_identifier)
+          (primitive_type))
+        (field_declaration
+          (field_identifier)
+          (primitive_type)))))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Struct declaration with methods
+==================
+
+struct Foo {
+    val: i32,
+
+    pub fn new(val: i32) Self {
+        return Self { val };
+    }
+
+    pub fn get(self: &Self) i32 {
+        return self.val;
+    }
+}
+
+---
+
+(source_file
+  (struct_item
+    (type_identifier)
+    (struct_body
+      (field_declaration_list
+        (field_declaration
+          (field_identifier)
+          (primitive_type)))
+      (function_item
+        (visibility_modifier)
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (primitive_type)))
+        (type_identifier)
+        (block
+          (expression_statement
+            (return_expression
+              (struct_expression
+                (type_identifier)
+                (field_initializer_list
+                  (shorthand_field_initializer
+                    (identifier))))))))
+      (function_item
+        (visibility_modifier)
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (reference_type
+              (type_identifier))))
+        (primitive_type)
+        (block
+          (expression_statement
+            (return_expression
+              (field_expression
+                (self)
+                (field_identifier)))))))))
+
+==================
+Struct declaration with visibility
+==================
+
+pub struct Point {
+    pub x: i32,
+    y: i32,
+}
+
+fn main() void {}
+
+---
+
+(source_file
+  (struct_item
+    (visibility_modifier)
+    (type_identifier)
+    (struct_body
+      (field_declaration_list
+        (field_declaration
+          (visibility_modifier)
+          (field_identifier)
+          (primitive_type))
+        (field_declaration
+          (field_identifier)
+          (primitive_type)))))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Interface declaration
+==================
+
+interface Drawable {
+    fn draw(self: &Self) void;
+}
+
+fn main() void {}
+
+---
+
+(source_file
+  (interface_item
+    (type_identifier)
+    (declaration_list
+      (function_signature_item
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (reference_type
+              (type_identifier))))
+        (primitive_type))))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Interface declaration with visibility
+==================
+
+pub interface Drawable {
+    fn draw(self: &Self) void;
+}
+
+---
+
+(source_file
+  (interface_item
+    (visibility_modifier)
+    (type_identifier)
+    (declaration_list
+      (function_signature_item
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (reference_type
+              (type_identifier))))
+        (primitive_type)))))
+
+==================
+Impl block
+==================
+
+interface I {
+    fn f(self: &Self) i32;
+}
+
+struct S {
+    v: i32,
+}
+
+impl I for S {
+    fn f(self: &Self) i32 {
+        return self.v;
+    }
+}
+
+fn main() void {}
+
+---
+
+(source_file
+  (interface_item
+    (type_identifier)
+    (declaration_list
+      (function_signature_item
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (reference_type
+              (type_identifier))))
+        (primitive_type))))
+  (struct_item
+    (type_identifier)
+    (struct_body
+      (field_declaration_list
+        (field_declaration
+          (field_identifier)
+          (primitive_type)))))
+  (impl_item
+    (type_identifier)
+    (type_identifier)
+    (declaration_list
+      (function_item
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (reference_type
+              (type_identifier))))
+        (primitive_type)
+        (block
+          (expression_statement
+            (return_expression
+              (field_expression
+                (self)
+                (field_identifier))))))))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Module declaration (inline)
+==================
+
+mod math {
+    pub fn add(a: i32, b: i32) i32 {
+        return a + b;
+    }
+}
+
+fn main() void {}
+
+---
+
+(source_file
+  (mod_item
+    (identifier)
+    (declaration_list
+      (function_item
+        (visibility_modifier)
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (primitive_type))
+          (parameter
+            (identifier)
+            (primitive_type)))
+        (primitive_type)
+        (block
+          (expression_statement
+            (return_expression
+              (binary_expression
+                (identifier)
+                (identifier))))))))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Module declaration (file-based)
+==================
+
+mod foo;
+
+fn main() void {}
+
+---
+
+(source_file
+  (mod_item
+    (identifier))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Module declaration with visibility
+==================
+
+pub mod math;
+
+fn main() void {}
+
+---
+
+(source_file
+  (mod_item
+    (visibility_modifier)
+    (identifier))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Import declaration (simple path)
+==================
+
+import foo;
+
+fn main() void {}
+
+---
+
+(source_file
+  (import_declaration
+    (identifier))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Import declaration (scoped)
+==================
+
+import foo::bar;
+
+fn main() void {}
+
+---
+
+(source_file
+  (import_declaration
+    (scoped_identifier
+      (identifier)
+      (identifier)))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Import declaration (list)
+==================
+
+import { foo, bar };
+
+fn main() void {}
+
+---
+
+(source_file
+  (import_declaration
+    (import_list
+      (identifier)
+      (identifier)))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Import declaration (scoped list)
+==================
+
+import my_module::{ foo, bar };
+
+fn main() void {}
+
+---
+
+(source_file
+  (import_declaration
+    (scoped_import_list
+      (identifier)
+      (import_list
+        (identifier)
+        (identifier))))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Import declaration (as clause)
+==================
+
+import foo as bar;
+
+fn main() void {}
+
+---
+
+(source_file
+  (import_declaration
+    (import_as_clause
+      (identifier)
+      (identifier)))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Import declaration (wildcard)
+==================
+
+import foo::*;
+
+fn main() void {}
+
+---
+
+(source_file
+  (import_declaration
+    (import_wildcard
+      (identifier)))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+Import declaration (visibility)
+==================
+
+pub import foo;
+
+fn main() void {}
+
+---
+
+(source_file
+  (import_declaration
+    (visibility_modifier)
+    (identifier))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))

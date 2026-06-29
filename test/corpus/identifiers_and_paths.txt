@@ -1,0 +1,168 @@
+==================
+Basic identifier
+==================
+
+fn main() void {
+    let foo = 42;
+    let bar_baz = 10;
+    let _private = 1;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (integer_literal)))))
+
+==================
+Unicode identifiers (Greek)
+==================
+
+fn main() i32 {
+    let α = 42;
+    let β = α + 1;
+    return β;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (return_expression
+          (identifier))))))
+
+==================
+Unicode identifiers (Cyrillic)
+==================
+
+fn main() i32 {
+    let переменная = 1;
+    let значение = переменная + 2;
+    return значение;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (binary_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (return_expression
+          (identifier))))))
+
+==================
+Mixed ascii and unicode identifiers
+==================
+
+fn main() i32 {
+    let my_α = 1;
+    let π_value = 2;
+    return my_α + π_value;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (expression_statement
+        (return_expression
+          (binary_expression
+            (identifier)
+            (identifier)))))))
+
+==================
+Primitive type as identifier
+==================
+
+fn main() void {
+    let u8 = 42;
+    let bool = true;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (integer_literal))
+      (let_declaration
+        (identifier)
+        (boolean_literal)))))
+
+==================
+Metavariable
+==================
+
+fn $test() void {}
+
+fn main() void {
+    let x = $name;
+}
+
+---
+
+(source_file
+  (function_item
+    (metavariable)
+    (parameters)
+    (primitive_type)
+    (block))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (metavariable)))))

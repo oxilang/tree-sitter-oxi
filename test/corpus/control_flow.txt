@@ -1,0 +1,216 @@
+==================
+If expression
+==================
+
+fn main() i32 {
+    if true { 1 } else { 2 }
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (if_expression
+          (boolean_literal)
+          (block
+            (integer_literal))
+          (else_clause
+            (block
+              (integer_literal))))))))
+
+==================
+If expression without else
+==================
+
+fn main() void {
+    if true {
+        let x = 1;
+    }
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (if_expression
+          (boolean_literal)
+          (block
+            (let_declaration
+              (identifier)
+              (integer_literal))))))))
+
+==================
+If expression with else if
+==================
+
+fn main() i32 {
+    if false { 1 } else if true { 2 } else { 3 }
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (if_expression
+          (boolean_literal)
+          (block
+            (integer_literal))
+          (else_clause
+            (if_expression
+              (boolean_literal)
+              (block
+                (integer_literal))
+              (else_clause
+                (block
+                  (integer_literal))))))))))
+
+==================
+If expression as statement
+==================
+
+fn main() i32 {
+    if true {
+        let x = 1;
+    }
+    42
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (if_expression
+          (boolean_literal)
+          (block
+            (let_declaration
+              (identifier)
+              (integer_literal)))))
+      (integer_literal))))
+
+==================
+While expression
+==================
+
+fn main() void {
+    while true {
+        break;
+    }
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (while_expression
+          (boolean_literal)
+          (block
+            (expression_statement
+              (break_expression))))))))
+
+==================
+Loop expression
+==================
+
+fn main() void {
+    loop {
+        break;
+    }
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (loop_expression
+          (block
+            (expression_statement
+              (break_expression))))))))
+
+==================
+Nested blocks
+==================
+
+fn main() void {
+    {
+        {
+            {}
+        }
+    }
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (block
+          (expression_statement
+            (block
+              (expression_statement
+                (block)))))))))
+
+==================
+Block with statements and tail expression
+==================
+
+fn main() i32 {
+    {
+        let x = 1;
+        let y = 2;
+        x + y
+    }
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (block
+          (let_declaration
+            (identifier)
+            (integer_literal))
+          (let_declaration
+            (identifier)
+            (integer_literal))
+          (binary_expression
+            (identifier)
+            (identifier)))))))
