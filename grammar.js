@@ -265,9 +265,9 @@ export default grammar({
     array_type: ($) =>
       seq(
         "[",
-        optional(field("length", $._expression)),
-        "]",
         field("element", $._type),
+        optional(seq(";", field("length", $._expression))),
+        "]",
       ),
 
     function_type: ($) =>
@@ -443,12 +443,9 @@ export default grammar({
     array_expression: ($) =>
       seq(
         "[",
-        "]",
-        $._type,
-        "{",
         sepBy(",", seq(repeat($.attribute_item), $._expression)),
         optional(","),
-        "}",
+        "]",
       ),
 
     parenthesized_expression: ($) => seq("(", $._expression, ")"),
