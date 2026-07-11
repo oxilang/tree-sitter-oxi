@@ -1,0 +1,179 @@
+==================
+Nested generics
+==================
+
+struct Pair<A, B> {
+    first: A,
+    second: B,
+}
+
+struct Wrapper<T> {
+    inner: T
+}
+
+fn main() void {
+    let w: Wrapper::<Pair::<i32, bool> > = Wrapper {
+        inner: Pair { first: 1, second: true }
+    };
+}
+
+---
+
+(source_file
+  (struct_item
+    (type_identifier)
+    (type_parameters
+      (type_parameter
+        (type_identifier))
+      (type_parameter
+        (type_identifier)))
+    (struct_body
+      (field_declaration_list
+        (field_declaration
+          (field_identifier)
+          (type_identifier))
+        (field_declaration
+          (field_identifier)
+          (type_identifier)))))
+      (struct_item
+    (type_identifier)
+    (type_parameters
+      (type_parameter
+        (type_identifier)))
+    (struct_body
+      (field_declaration_list
+        (field_declaration
+          (field_identifier)
+          (type_identifier))
+        (MISSING ","))))
+      (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (generic_type
+          (type_identifier)
+          (type_arguments
+            (generic_type
+              (type_identifier)
+              (type_arguments
+                (primitive_type)
+                (primitive_type)))))
+            (struct_expression
+          (type_identifier)
+          (field_initializer_list
+            (field_initializer
+              (field_identifier)
+              (struct_expression
+                (type_identifier)
+                (field_initializer_list
+                  (field_initializer
+                    (field_identifier)
+                    (integer_literal))
+                  (field_initializer
+                    (field_identifier)
+                    (boolean_literal)))))))))))
+
+==================
+Function generics
+==================
+
+struct Foo<T> {
+    data: T,
+}
+
+fn identity<T>(x: T) T {
+    x
+}
+
+pub fn main() void {
+    let x = identity::<usize>(42);
+    let y = identity(Foo { data: 42 });
+    let z: Foo::<Foo::<usize> > = Foo::<Foo::<usize> > { data: identity(Foo::<usize> { data: 42 }) };
+}
+
+---
+
+(source_file
+  (struct_item
+    (type_identifier)
+    (type_parameters
+      (type_parameter
+        (type_identifier)))
+    (struct_body
+      (field_declaration_list
+        (field_declaration
+          (field_identifier)
+          (type_identifier)))))
+      (function_item
+    (identifier)
+    (type_parameters
+      (type_parameter
+        (type_identifier)))
+    (parameters
+      (parameter
+        (identifier)
+        (type_identifier)))
+    (type_identifier)
+    (block
+      (identifier)))
+  (function_item
+    (visibility_modifier)
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (call_expression
+          (generic_function
+            (identifier)
+            (type_arguments
+              (primitive_type)))
+          (arguments
+            (integer_literal))))
+          (let_declaration
+        (identifier)
+        (call_expression
+          (identifier)
+          (arguments
+            (struct_expression
+              (type_identifier)
+              (field_initializer_list
+                (field_initializer
+                  (field_identifier)
+                  (integer_literal)))))))
+          (let_declaration
+        (identifier)
+        (generic_type
+          (type_identifier)
+          (type_arguments
+            (generic_type
+              (type_identifier)
+              (type_arguments
+                (primitive_type)))))
+            (struct_expression
+          (generic_type
+            (type_identifier)
+            (type_arguments
+              (generic_type
+                (type_identifier)
+                (type_arguments
+                  (primitive_type)))))
+              (field_initializer_list
+            (field_initializer
+              (field_identifier)
+              (call_expression
+                (identifier)
+                (arguments
+                  (struct_expression
+                    (generic_type
+                      (type_identifier)
+                      (type_arguments
+                        (primitive_type)))
+                    (field_initializer_list
+                      (field_initializer
+                        (field_identifier)
+                        (integer_literal)))))))))))))
