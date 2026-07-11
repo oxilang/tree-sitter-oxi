@@ -58,6 +58,15 @@
     "::"
     name: (identifier) @function))
 
+(generic_function
+  function: (identifier) @function)
+(generic_function
+  function: (scoped_identifier
+    name: (identifier) @function))
+(generic_function
+  function: (field_expression
+    field: (field_identifier) @function.method))
+
 ; Function definitions
 
 (function_item (identifier) @function)
@@ -71,6 +80,13 @@
 "]" @punctuation.bracket
 "{" @punctuation.bracket
 "}" @punctuation.bracket
+
+(type_arguments
+  "<" @punctuation.bracket
+  ">" @punctuation.bracket)
+(type_parameters
+  "<" @punctuation.bracket
+  ">" @punctuation.bracket)
 
 "::" @punctuation.delimiter
 ":" @punctuation.delimiter

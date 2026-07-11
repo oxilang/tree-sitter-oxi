@@ -69,7 +69,10 @@ export default grammar({
     $._expression_ending_with_block,
   ],
 
-  conflicts: ($) => [[$.field_declaration_list]],
+  conflicts: ($) => [
+    [$.field_declaration_list],
+    [$.scoped_identifier, $.scoped_type_identifier],
+  ],
 
   word: ($) => $.identifier,
 
@@ -122,6 +125,7 @@ export default grammar({
         optional($.visibility_modifier),
         "struct",
         field("name", $._type_identifier),
+        field("type_parameters", optional($.type_parameters)),
         field("body", $.struct_body),
       ),
 
@@ -161,6 +165,7 @@ export default grammar({
         optional($.extern_modifier),
         "fn",
         field("name", choice($.identifier, $.metavariable)),
+        field("type_parameters", optional($.type_parameters)),
         field("parameters", $.parameters),
         field("return_type", $._type),
         field("body", $.block),
@@ -172,6 +177,7 @@ export default grammar({
         optional($.extern_modifier),
         "fn",
         field("name", choice($.identifier, $.metavariable)),
+        field("type_parameters", optional($.type_parameters)),
         field("parameters", $.parameters),
         field("return_type", $._type),
         ";",
@@ -196,7 +202,34 @@ export default grammar({
         optional($.visibility_modifier),
         "interface",
         field("name", $._type_identifier),
+        field("type_parameters", optional($.type_parameters)),
         field("body", $.declaration_list),
+      ),
+
+    type_parameters: ($) =>
+      prec(
+        1,
+        seq(
+          "<",
+          sepBy1(
+            ",",
+            seq(
+              repeat($.attribute_item),
+              choice($.metavariable, $.type_parameter),
+            ),
+          ),
+          optional(","),
+          ">",
+        ),
+      ),
+
+    type_parameter: ($) =>
+      prec(
+        1,
+        seq(
+          field("name", $._type_identifier),
+          optional(seq("=", field("default_type", $._type))),
+        ),
       ),
 
     let_declaration: ($) =>
@@ -253,6 +286,7 @@ export default grammar({
       choice(
         $.reference_type,
         $.metavariable,
+        $.generic_type,
         $.scoped_type_identifier,
         $.tuple_type,
         $.array_type,
@@ -276,7 +310,37 @@ export default grammar({
         seq("->", field("return_type", $._type)),
       ),
 
+    generic_function: ($) =>
+      prec(
+        1,
+        seq(
+          field(
+            "function",
+            choice($.identifier, $.scoped_identifier, $.field_expression),
+          ),
+          "::",
+          field("type_arguments", $.type_arguments),
+        ),
+      ),
+
+    generic_type: ($) =>
+      seq(
+        field(
+          "type",
+          choice(
+            $._type_identifier,
+            $.scoped_identifier,
+            $.scoped_type_identifier,
+          ),
+        ),
+        "::",
+        field("type_arguments", $.type_arguments),
+      ),
+
     tuple_type: ($) => seq("(", sepBy1(",", $._type), optional(","), ")"),
+
+    type_arguments: ($) =>
+      seq("<", sepBy1(",", choice($._type, $._literal, $.block)), ">"),
 
     reference_type: ($) =>
       seq("&", optional($.mutable_specifier), field("type", $._type)),
@@ -304,6 +368,7 @@ export default grammar({
         alias(choice(...primitiveTypes), $.identifier),
         $.self,
         $.scoped_identifier,
+        $.generic_function,
         $.field_expression,
         $.array_expression,
         $.tuple_expression,
@@ -322,7 +387,7 @@ export default grammar({
 
     scoped_identifier: ($) =>
       seq(
-        field("path", optional($._path)),
+        field("path", choice($._path, $.generic_type)),
         "::",
         field("name", choice($.identifier, $.super)),
       ),
@@ -331,7 +396,7 @@ export default grammar({
       prec(
         -2,
         seq(
-          field("path", optional($._path)),
+          field("path", choice($._path, $.generic_type)),
           "::",
           field("name", $._type_identifier),
         ),
@@ -339,7 +404,7 @@ export default grammar({
 
     scoped_type_identifier: ($) =>
       seq(
-        field("path", optional($._path)),
+        field("path", choice($._path, $.generic_type)),
         "::",
         field("name", $._type_identifier),
       ),
@@ -469,6 +534,7 @@ export default grammar({
               $.scoped_type_identifier_in_expression_position,
               $.scoped_type_identifier,
             ),
+            $.generic_type,
           ),
         ),
         field("body", $.field_initializer_list),

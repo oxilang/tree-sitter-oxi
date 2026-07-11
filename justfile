@@ -1,6 +1,9 @@
 # Build parser and make neovim use the local build
-nvim-use:
+build:
+    tree-sitter generate
     tree-sitter build
+
+nvim-use: build
     mkdir -p ~/.local/share/nvim/site/parser
     ln -sf $(pwd)/oxi.so ~/.local/share/nvim/site/parser/oxi.so
     @if [ -d ~/.local/share/nvim/lazy/tree-sitter-oxi ]; then \
