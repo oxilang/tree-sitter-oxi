@@ -139,7 +139,7 @@ export default grammar({
       ),
 
     field_declaration_list: ($) =>
-      seq(sepBy(",", seq(repeat($.attribute_item), $.field_declaration)), ","),
+      seq(sepBy1(",", seq(repeat($.attribute_item), $.field_declaration)), optional(",")),
 
     field_declaration: ($) =>
       seq(

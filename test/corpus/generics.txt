@@ -44,8 +44,7 @@ fn main() void {
       (field_declaration_list
         (field_declaration
           (field_identifier)
-          (type_identifier))
-        (MISSING ","))))
+          (type_identifier)))))
       (function_item
     (identifier)
     (parameters)

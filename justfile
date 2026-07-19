@@ -1,7 +1,9 @@
-# Build parser and make neovim use the local build
 build:
     tree-sitter generate
     tree-sitter build
+
+test:
+    tree-sitter test
 
 nvim-use: build
     mkdir -p ~/.local/share/nvim/site/parser
