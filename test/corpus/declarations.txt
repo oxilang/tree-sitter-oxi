@@ -322,10 +322,10 @@ fn main() void {}
     (block)))
 
 ==================
-Interface declaration
+Trait declaration
 ==================
 
-interface Drawable {
+trait Drawable {
     fn draw(self: &Self) void;
 }
 
@@ -334,7 +334,7 @@ fn main() void {}
 ---
 
 (source_file
-  (interface_item
+  (trait_item
     (type_identifier)
     (declaration_list
       (function_signature_item
@@ -352,17 +352,17 @@ fn main() void {}
     (block)))
 
 ==================
-Interface declaration with visibility
+Trait declaration with visibility
 ==================
 
-pub interface Drawable {
+pub trait Drawable {
     fn draw(self: &Self) void;
 }
 
 ---
 
 (source_file
-  (interface_item
+  (trait_item
     (visibility_modifier)
     (type_identifier)
     (declaration_list
@@ -379,7 +379,7 @@ pub interface Drawable {
 Impl block
 ==================
 
-interface I {
+trait I {
     fn f(self: &Self) i32;
 }
 
@@ -398,7 +398,7 @@ fn main() void {}
 ---
 
 (source_file
-  (interface_item
+  (trait_item
     (type_identifier)
     (declaration_list
       (function_signature_item

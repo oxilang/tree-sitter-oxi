@@ -113,7 +113,7 @@
 (visibility_modifier) @keyword
 "return" @keyword
 "struct" @keyword
-"interface" @keyword
+"trait" @keyword
 "import" @keyword
 "while" @keyword
 (crate) @keyword

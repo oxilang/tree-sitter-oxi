@@ -36,10 +36,6 @@
         "named": true
       },
       {
-        "type": "interface_item",
-        "named": true
-      },
-      {
         "type": "let_declaration",
         "named": true
       },
@@ -49,6 +45,10 @@
       },
       {
         "type": "struct_item",
+        "named": true
+      },
+      {
+        "type": "trait_item",
         "named": true
       }
     ]
@@ -1268,7 +1268,7 @@
           }
         ]
       },
-      "interface": {
+      "trait": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1513,52 +1513,6 @@
       "types": [
         {
           "type": "attribute",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "interface_item",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "declaration_list",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "type_identifier",
-            "named": true
-          }
-        ]
-      },
-      "type_parameters": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "type_parameters",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "visibility_modifier",
           "named": true
         }
       ]
@@ -2134,6 +2088,52 @@
     }
   },
   {
+    "type": "trait_item",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "declaration_list",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_identifier",
+            "named": true
+          }
+        ]
+      },
+      "type_parameters": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_parameters",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "visibility_modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "try_expression",
     "named": true,
     "fields": {},
@@ -2546,10 +2546,6 @@
     "named": true
   },
   {
-    "type": "interface",
-    "named": false
-  },
-  {
     "type": "let",
     "named": false
   },
@@ -2596,6 +2592,10 @@
   {
     "type": "super",
     "named": true
+  },
+  {
+    "type": "trait",
+    "named": false
   },
   {
     "type": "true",

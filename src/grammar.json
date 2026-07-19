@@ -111,7 +111,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "interface_item"
+          "name": "trait_item"
         },
         {
           "type": "SYMBOL",
@@ -714,7 +714,7 @@
           "members": [
             {
               "type": "FIELD",
-              "name": "interface",
+              "name": "trait",
               "content": {
                 "type": "CHOICE",
                 "members": [
@@ -753,7 +753,7 @@
         }
       ]
     },
-    "interface_item": {
+    "trait_item": {
       "type": "SEQ",
       "members": [
         {
@@ -770,7 +770,7 @@
         },
         {
           "type": "STRING",
-          "value": "interface"
+          "value": "trait"
         },
         {
           "type": "FIELD",

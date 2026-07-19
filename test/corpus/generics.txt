@@ -185,7 +185,7 @@ struct Foo<T = i64> {
     data: T,
 }
 
-interface Add<T = Self> {
+trait Add<T = Self> {
     fn add(self: &Self, rhs: &T) T;
 }
 
@@ -214,7 +214,7 @@ pub fn main() void {
         (field_declaration
           (field_identifier)
           (type_identifier)))))
-  (interface_item
+  (trait_item
     (type_identifier)
     (type_parameters
       (type_parameter

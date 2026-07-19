@@ -19,9 +19,9 @@
 (function_item
     name: (identifier) @name) @definition.function
 
-; interface definitions
-(interface_item
-    name: (type_identifier) @name) @definition.interface
+; trait definitions
+(trait_item
+    name: (type_identifier) @name) @definition.trait
 
 ; module definitions
 (mod_item
@@ -39,8 +39,8 @@
 ; implementations
 
 (impl_item
-    interface: (type_identifier) @name) @reference.implementation
+    trait: (type_identifier) @name) @reference.implementation
 
 (impl_item
     type: (type_identifier) @name
-    !interface) @reference.implementation
+    !trait) @reference.implementation

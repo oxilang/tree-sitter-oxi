@@ -98,7 +98,7 @@ export default grammar({
         $.function_item,
         $.function_signature_item,
         $.impl_item,
-        $.interface_item,
+        $.trait_item,
         $.let_declaration,
         $.import_declaration,
       ),
@@ -139,7 +139,10 @@ export default grammar({
       ),
 
     field_declaration_list: ($) =>
-      seq(sepBy1(",", seq(repeat($.attribute_item), $.field_declaration)), optional(",")),
+      seq(
+        sepBy1(",", seq(repeat($.attribute_item), $.field_declaration)),
+        optional(","),
+      ),
 
     field_declaration: ($) =>
       seq(
@@ -188,20 +191,17 @@ export default grammar({
       seq(
         "impl",
         seq(
-          field(
-            "interface",
-            choice($._type_identifier, $.scoped_type_identifier),
-          ),
+          field("trait", choice($._type_identifier, $.scoped_type_identifier)),
           "for",
         ),
         field("type", $._type),
         field("body", $.declaration_list),
       ),
 
-    interface_item: ($) =>
+    trait_item: ($) =>
       seq(
         optional($.visibility_modifier),
-        "interface",
+        "trait",
         field("name", $._type_identifier),
         field("type_parameters", optional($.type_parameters)),
         field("body", $.declaration_list),
