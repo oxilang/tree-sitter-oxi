@@ -72,6 +72,7 @@ export default grammar({
   conflicts: ($) => [
     [$.field_declaration_list],
     [$.scoped_identifier, $.scoped_type_identifier],
+    [$.struct_body, $.field_declaration_list],
   ],
 
   word: ($) => $.identifier,
@@ -132,7 +133,7 @@ export default grammar({
     struct_body: ($) =>
       seq(
         "{",
-        field("fields", $.field_declaration_list),
+        field("fields", optional($.field_declaration_list)),
         field("declarations", repeat($._declaration_statement)),
         "}",
       ),

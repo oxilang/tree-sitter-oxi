@@ -2043,7 +2043,7 @@
       },
       "fields": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "field_declaration_list",

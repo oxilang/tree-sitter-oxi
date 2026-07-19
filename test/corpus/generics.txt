@@ -177,3 +177,117 @@ pub fn main() void {
                       (field_initializer
                         (field_identifier)
                         (integer_literal)))))))))))))
+
+==================
+Default generics
+==================
+
+struct Foo<T = i64> {
+    data: T,
+}
+
+interface Add<T = Self> {
+    fn add(self: &Self, rhs: &T) T;
+}
+
+impl Add for Foo {
+    fn add(self: &Self, rhs: &Self) Self {
+        Self { data: self.data + rhs.data }
+    }
+}
+
+pub fn main() void {
+    let foo = Foo { data: 12 };
+    let bar = foo.add(&Foo { data: 1 });
+}
+
+---
+
+(source_file
+  (struct_item
+    (type_identifier)
+    (type_parameters
+      (type_parameter
+        (type_identifier)
+        (primitive_type)))
+    (struct_body
+      (field_declaration_list
+        (field_declaration
+          (field_identifier)
+          (type_identifier)))))
+  (interface_item
+    (type_identifier)
+    (type_parameters
+      (type_parameter
+        (type_identifier)
+        (type_identifier)))
+    (declaration_list
+      (function_signature_item
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (reference_type
+              (type_identifier)))
+          (parameter
+            (identifier)
+            (reference_type
+              (type_identifier))))
+        (type_identifier))))
+  (impl_item
+    (type_identifier)
+    (type_identifier)
+    (declaration_list
+      (function_item
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (reference_type
+              (type_identifier)))
+          (parameter
+            (identifier)
+            (reference_type
+              (type_identifier))))
+        (type_identifier)
+        (block
+          (struct_expression
+            (type_identifier)
+            (field_initializer_list
+              (field_initializer
+                (field_identifier)
+                (binary_expression
+                  (field_expression
+                    (self)
+                    (field_identifier))
+                  (field_expression
+                    (identifier)
+                    (field_identifier))))))))))
+  (function_item
+    (visibility_modifier)
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (struct_expression
+          (type_identifier)
+          (field_initializer_list
+            (field_initializer
+              (field_identifier)
+              (integer_literal)))))
+      (let_declaration
+        (identifier)
+        (call_expression
+          (field_expression
+            (identifier)
+            (field_identifier))
+          (arguments
+            (reference_expression
+              (struct_expression
+                (type_identifier)
+                (field_initializer_list
+                  (field_initializer
+                    (field_identifier)
+                    (integer_literal)))))))))))

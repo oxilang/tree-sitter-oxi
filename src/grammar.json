@@ -324,8 +324,16 @@
           "type": "FIELD",
           "name": "fields",
           "content": {
-            "type": "SYMBOL",
-            "name": "field_declaration_list"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "field_declaration_list"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -4075,6 +4083,10 @@
     [
       "scoped_identifier",
       "scoped_type_identifier"
+    ],
+    [
+      "struct_body",
+      "field_declaration_list"
     ]
   ],
   "precedences": [],

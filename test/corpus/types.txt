@@ -383,3 +383,41 @@ fn main() void {
             (field_initializer
               (field_identifier)
               (integer_literal))))))))
+
+==================
+Struct without fields
+==================
+
+struct Point {
+    pub fn new() Self {}
+}
+
+fn main() void {
+    let p: Point = Point::new();
+}
+
+---
+
+(source_file
+  (struct_item
+    (type_identifier)
+    (struct_body
+      (function_item
+        (visibility_modifier)
+        (identifier)
+        (parameters)
+        (type_identifier)
+        (block))))
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (type_identifier)
+        (call_expression
+          (scoped_identifier
+            (identifier)
+            (identifier))
+          (arguments))))))
