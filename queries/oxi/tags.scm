@@ -3,6 +3,11 @@
 (struct_item
     name: (type_identifier) @name) @definition.class
 
+; type aliases
+
+(type_item
+  name: (type_identifier) @name) @definition.class
+
 ; method definitions
 
 (declaration_list

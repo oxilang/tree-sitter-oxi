@@ -114,6 +114,7 @@
 "return" @keyword
 "struct" @keyword
 "trait" @keyword
+"type" @keyword
 "import" @keyword
 "while" @keyword
 (crate) @keyword

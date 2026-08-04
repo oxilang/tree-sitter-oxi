@@ -664,3 +664,44 @@ fn main() void {}
     (parameters)
     (primitive_type)
     (block)))
+
+==================
+Type alias declaration
+==================
+
+type Foo = i32;
+
+---
+
+(source_file
+  (type_item
+    (type_identifier)
+    (primitive_type)))
+
+==================
+Associated type
+==================
+
+trait Foo {
+    type Bar;
+}
+
+impl Foo for i32 {
+    type Bar = i32;
+}
+
+---
+
+(source_file
+  (trait_item
+    (type_identifier)
+    (declaration_list
+      (associated_type
+        (type_identifier))))
+  (impl_item
+    (type_identifier)
+    (primitive_type)
+    (declaration_list
+      (type_item
+        (type_identifier)
+        (primitive_type)))))

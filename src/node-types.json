@@ -4,6 +4,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "associated_type",
+        "named": true
+      },
+      {
         "type": "attribute_item",
         "named": true
       },
@@ -49,6 +53,10 @@
       },
       {
         "type": "trait_item",
+        "named": true
+      },
+      {
+        "type": "type_item",
         "named": true
       }
     ]
@@ -334,6 +342,32 @@
     }
   },
   {
+    "type": "associated_type",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_identifier",
+            "named": true
+          }
+        ]
+      },
+      "type_parameters": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_parameters",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "attribute",
     "named": true,
     "fields": {
@@ -529,6 +563,21 @@
     "type": "boolean_literal",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "bracketed_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "qualified_type",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "break_expression",
@@ -1688,6 +1737,32 @@
     }
   },
   {
+    "type": "qualified_type",
+    "named": true,
+    "fields": {
+      "alias": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_type",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "range_expression",
     "named": true,
     "fields": {},
@@ -1792,6 +1867,10 @@
         "required": true,
         "types": [
           {
+            "type": "bracketed_type",
+            "named": true
+          },
+          {
             "type": "crate",
             "named": true
           },
@@ -1887,6 +1966,10 @@
         "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bracketed_type",
+            "named": true
+          },
           {
             "type": "crate",
             "named": true
@@ -2225,6 +2308,52 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "type_item",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_type",
+            "named": true
+          }
+        ]
+      },
+      "type_parameters": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_parameters",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "visibility_modifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2599,6 +2728,10 @@
   },
   {
     "type": "true",
+    "named": false
+  },
+  {
+    "type": "type",
     "named": false
   },
   {
