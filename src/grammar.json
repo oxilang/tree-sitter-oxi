@@ -99,6 +99,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "type_item"
+        },
+        {
+          "type": "SYMBOL",
           "name": "function_item"
         },
         {
@@ -112,6 +116,10 @@
         {
           "type": "SYMBOL",
           "name": "trait_item"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "associated_type"
         },
         {
           "type": "SYMBOL",
@@ -526,6 +534,67 @@
         }
       ]
     },
+    "type_item": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "visibility_modifier"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "type"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_type_identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "type_parameters",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "type_parameters"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "FIELD",
+          "name": "type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_type"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
     "function_item": {
       "type": "SEQ",
       "members": [
@@ -803,6 +872,43 @@
             "type": "SYMBOL",
             "name": "declaration_list"
           }
+        }
+      ]
+    },
+    "associated_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "type"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_type_identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "type_parameters",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "type_parameters"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
@@ -1489,6 +1595,48 @@
         }
       ]
     },
+    "bracketed_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "<"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "qualified_type"
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
+    "qualified_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_type"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "as"
+        },
+        {
+          "type": "FIELD",
+          "name": "alias",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_type"
+          }
+        }
+      ]
+    },
     "array_type": {
       "type": "SEQ",
       "members": [
@@ -2040,6 +2188,10 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "bracketed_type"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "generic_type"
               }
             ]
@@ -2118,6 +2270,10 @@
               {
                 "type": "SYMBOL",
                 "name": "_path"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "bracketed_type"
               },
               {
                 "type": "SYMBOL",

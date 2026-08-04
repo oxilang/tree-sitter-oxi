@@ -95,10 +95,12 @@ export default grammar({
         $.inner_attribute_item,
         $.mod_item,
         $.struct_item,
+        $.type_item,
         $.function_item,
         $.function_signature_item,
         $.impl_item,
         $.trait_item,
+        $.associated_type,
         $.let_declaration,
         $.import_declaration,
       ),
@@ -163,6 +165,17 @@ export default grammar({
         ";",
       ),
 
+    type_item: ($) =>
+      seq(
+        optional($.visibility_modifier),
+        "type",
+        field("name", $._type_identifier),
+        field("type_parameters", optional($.type_parameters)),
+        "=",
+        field("type", $._type),
+        ";",
+      ),
+
     function_item: ($) =>
       seq(
         optional($.visibility_modifier),
@@ -205,6 +218,14 @@ export default grammar({
         field("name", $._type_identifier),
         field("type_parameters", optional($.type_parameters)),
         field("body", $.declaration_list),
+      ),
+
+    associated_type: ($) =>
+      seq(
+        "type",
+        field("name", $._type_identifier),
+        field("type_parameters", optional($.type_parameters)),
+        ";",
       ),
 
     type_parameters: ($) =>
@@ -297,6 +318,11 @@ export default grammar({
         alias(choice(...primitiveTypes), $.primitive_type),
       ),
 
+    bracketed_type: ($) => seq("<", $.qualified_type, ">"),
+
+    qualified_type: ($) =>
+      seq(field("type", $._type), "as", field("alias", $._type)),
+
     array_type: ($) =>
       seq(
         "[",
@@ -388,7 +414,7 @@ export default grammar({
 
     scoped_identifier: ($) =>
       seq(
-        field("path", choice($._path, $.generic_type)),
+        field("path", choice($._path, $.bracketed_type, $.generic_type)),
         "::",
         field("name", choice($.identifier, $.super)),
       ),
@@ -405,7 +431,7 @@ export default grammar({
 
     scoped_type_identifier: ($) =>
       seq(
-        field("path", choice($._path, $.generic_type)),
+        field("path", choice($._path, $.bracketed_type, $.generic_type)),
         "::",
         field("name", $._type_identifier),
       ),

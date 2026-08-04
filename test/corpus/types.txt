@@ -421,3 +421,28 @@ fn main() void {
             (identifier)
             (identifier))
           (arguments))))))
+
+==================
+Projection type
+==================
+
+fn main() void {
+    let a: <Point as Add>::Output;
+}
+
+---
+
+(source_file
+  (function_item
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_declaration
+        (identifier)
+        (scoped_type_identifier
+          (bracketed_type
+            (qualified_type
+              (type_identifier)
+              (type_identifier)))
+          (type_identifier))))))

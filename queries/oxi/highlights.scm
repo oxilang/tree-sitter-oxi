@@ -87,6 +87,9 @@
 (type_parameters
   "<" @punctuation.bracket
   ">" @punctuation.bracket)
+(bracketed_type
+  "<" @punctuation.bracket
+  ">" @punctuation.bracket)
 
 "::" @punctuation.delimiter
 ":" @punctuation.delimiter
@@ -114,6 +117,7 @@
 "return" @keyword
 "struct" @keyword
 "trait" @keyword
+"type" @keyword
 "import" @keyword
 "while" @keyword
 (crate) @keyword
